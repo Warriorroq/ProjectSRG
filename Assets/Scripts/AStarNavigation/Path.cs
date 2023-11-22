@@ -37,11 +37,11 @@ namespace ProjectSRG.AStarNavigation
 			}
 		}
 
-		public void DrawWithGizmos()
+		public void DrawWithGizmos(float size = 1)
 		{
 			Gizmos.color = Color.black;
 			foreach (Node p in waypoints)
-				Gizmos.DrawCube(p.worldPosition, Vector3.one * 4);
+				Gizmos.DrawCube(p.worldPosition, Vector3.one * size);
 		}
 
 		private Vector2 V3ToV2(Vector3 v3)
