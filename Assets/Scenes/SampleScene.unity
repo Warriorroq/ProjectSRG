@@ -2305,6 +2305,7 @@ GameObject:
   - component: {fileID: 1704185822}
   - component: {fileID: 1704185824}
   - component: {fileID: 1704185823}
+  - component: {fileID: 1704185825}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -2345,7 +2346,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   gridWorldSize: {x: 40, y: 40, z: 40}
-  nodeRadius: 2
+  nodeRadius: 1
   walkableRegions: []
   obstacleProximityPenalty: 10
   gridWasDirty:
@@ -2377,6 +2378,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simplify: 0
+--- !u!114 &1704185825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704185820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e420985370f4afe4aaa76f7466bfb585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _updatingRate: 10
 --- !u!1 &1720236121
 GameObject:
   m_ObjectHideFlags: 0
