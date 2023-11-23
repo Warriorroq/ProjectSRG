@@ -424,8 +424,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traits:
     _traitsToCreate:
-    - {fileID: 11400000, guid: 8d2125180824d8043820248528e747bf, type: 2}
     - {fileID: 11400000, guid: faec16c2588ab764cbe034e988c1e129, type: 2}
+    - {fileID: 11400000, guid: 8d2125180824d8043820248528e747bf, type: 2}
+    - {fileID: 11400000, guid: 15451b77a598507429a0d32ea692ec87, type: 2}
+    - {fileID: 11400000, guid: f6406911223b3ce42808367710a21ed5, type: 2}
+    - {fileID: 11400000, guid: a4916f47ff1c2df46b9fa3bb264a4c1f, type: 2}
+    - {fileID: 11400000, guid: 1220a8fb967995e4abc5f1246a56b3a0, type: 2}
+    - {fileID: 11400000, guid: c78d4a8a6cea09044a1af51b30e44ae7, type: 2}
+    - {fileID: 11400000, guid: 224255f52576bf6489a44a5005410e89, type: 2}
+    - {fileID: 11400000, guid: d29fef6a825b2fc4990e040380302e23, type: 2}
+    - {fileID: 11400000, guid: 05e6d1eb2eb965745b758921fc407320, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
