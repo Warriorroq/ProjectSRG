@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         traits.Awake();
-        traits.DebugTraits();
+        //traits.DebugTraits();
     }
     private void Update()
     {

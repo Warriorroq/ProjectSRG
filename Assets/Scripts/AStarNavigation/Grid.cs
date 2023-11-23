@@ -24,8 +24,8 @@ namespace ProjectSRG.AStarNavigation
         private float _nodeDiameter;
         private int _gridSizeX, _gridSizeY, _gridSizeZ;
 
-        private int _penaltyMin = int.MaxValue;
-        private int _penaltyMax = int.MinValue;
+        //private int _penaltyMin = int.MaxValue;
+        //private int _penaltyMax = int.MinValue;
 
         private Vector3 _gridBottomLeft, _gridTopRight;
         private bool _isDirty;
