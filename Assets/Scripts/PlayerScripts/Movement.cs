@@ -5,46 +5,93 @@ using UnityEngine.Windows;
 
 namespace ProjectSRG.PlayerScripts
 {
-    [RequireComponent(typeof(PlayerInput), typeof(Unit))]
+    [RequireComponent(typeof(PlayerInput), typeof(Unit), typeof(Rigidbody))]
     public class Movement : MonoBehaviour
     {
-        // everything is bad and it's just a rough sketch
-        [SerializeField] private Trait<float> _speed;
 
-        private Quaternion _targetRotation;
-        [SerializeField] private Vector2 _sensitivity;
-        [SerializeField] private float _rotationSpeed;
 
-        private Vector2 _lastInput;
-        private Vector3 _currentMovementInput;
-        private Vector3 _smoothInputVelocity;
-        [SerializeField] private float _smoothInputSpeed;
-        private void Start()
+        [Header("=== Ship Movement Settings ===")]
+        [SerializeField] private float _yawTorque = 560f;
+        [SerializeField] private float _pitchTorque = 1000f; 
+        [SerializeField] private float _rollTorque = 1000f; 
+        [SerializeField] private float _thrust = 180f; 
+        [SerializeField] private float _upThrust = 50f; 
+        [SerializeField] private float _strafeThrust = 50f; 
+        [SerializeField, Range(0.001f, 0.999f)] 
+        private float _thrustGlideReduction = 0.999f; 
+        [SerializeField, Range(0.001f, 0.999f)] 
+        private float _upDownGlideReduction = 0.111f; 
+        [SerializeField, Range(0.001f, 0.999f)] 
+        private float _leftRightGlideReduction = 0.111f;
+
+        private float _glide;
+        private float _verticalGlide;
+        private float _horizontalGlide;
+        private Rigidbody _rigitBody;
+
+        private float _thrust1D;
+        private float _strafe1D;
+        private float _upDown1D;
+        private float _roll1D;
+        private Vector2 _pitchYaw;
+
+        private void Awake()
         {
+            _rigitBody = GetComponent<Rigidbody>();
             Cursor.visible = false;
-            var traits = GetComponent<Unit>().traits;
-
-            _speed = traits.GetTrait<Trait<float>>("Speed");
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
-        public void MovementPerformed(InputAction.CallbackContext obj)
-            => _lastInput = obj.ReadValue<Vector2>();
-        public void RotationPerformed(InputAction.CallbackContext obj)
+        private void FixedUpdate()
         {
-            Vector2 input = obj.ReadValue<Vector2>();
-            Vector2 deltaRotation = input * _sensitivity;
-
-            Quaternion currentRotation = transform.rotation;
-            transform.eulerAngles = transform.eulerAngles + new Vector3(-deltaRotation.y, deltaRotation.x, 0);
-            _targetRotation = transform.rotation;
-            transform.rotation = currentRotation;
-
+            HandleMovement();
         }
-        private void Update() {
-            Vector3 moveDirectionInput = transform.forward * _lastInput.y + transform.right * _lastInput.x;
-            _currentMovementInput = Vector3.SmoothDamp(_currentMovementInput, moveDirectionInput, ref _smoothInputVelocity, _smoothInputSpeed);
-            transform.position += _currentMovementInput * Time.deltaTime * _speed.Value;
-            transform.rotation = Quaternion.Lerp(transform.rotation, _targetRotation, Time.deltaTime * _rotationSpeed);
+
+        private void HandleMovement()
+        {
+            UpdateRotationTorque();
+
+            UpdateRelativeForceInDirectionAndApplyGlide(_thrust1D, _thrust, ref _glide, _thrustGlideReduction, Vector3.forward);
+            UpdateRelativeForceInDirectionAndApplyGlide(_upDown1D, _upThrust, ref _verticalGlide, _upDownGlideReduction, Vector3.up);
+            UpdateRelativeForceInDirectionAndApplyGlide(_strafe1D, _strafeThrust, ref _horizontalGlide, _leftRightGlideReduction, Vector3.right);
         }
+
+        private void UpdateRotationTorque()
+        {
+            _rigitBody.AddRelativeTorque(Vector3.back * (_roll1D * _rollTorque * Time.deltaTime));
+            _rigitBody.AddRelativeTorque(Vector3.right * (Mathf.Clamp(-_pitchYaw.y, -1f, 1f) * _pitchTorque * Time.deltaTime));
+            _rigitBody.AddRelativeTorque(Vector3.up * (Mathf.Clamp(_pitchYaw.x, -1f, 1f) * _yawTorque * Time.deltaTime));
+        }
+
+        private void UpdateRelativeForceInDirectionAndApplyGlide(float input1D, float thurst, ref float glide, float gliderReduction, Vector3 direction)
+        {
+            if (Mathf.Abs(input1D) > 0.1f)
+            {
+                float relativeThurst = input1D * thurst;
+                _rigitBody.AddRelativeForce(direction * (relativeThurst * Time.deltaTime));
+                glide = relativeThurst;
+            }
+            else
+            {
+                _rigitBody.AddRelativeForce(direction * (glide * Time.deltaTime));
+                glide *= gliderReduction;
+            }
+        }
+        #region Input Methods
+        public void OnThurst(InputAction.CallbackContext context)       
+            =>_thrust1D = context.ReadValue<float>();
+
+        public void OnStrafe(InputAction.CallbackContext context)
+            =>_strafe1D = context.ReadValue<float>();
+
+        public void OnUpDown(InputAction.CallbackContext context)
+            =>_upDown1D = context.ReadValue<float>();
+
+        public void OnRoll(InputAction.CallbackContext context)
+            =>_roll1D = context.ReadValue<float>();
+
+        public void OnPitchYaw(InputAction.CallbackContext context)
+            =>_pitchYaw = context.ReadValue<Vector2>();
+        #endregion
     }
 }
