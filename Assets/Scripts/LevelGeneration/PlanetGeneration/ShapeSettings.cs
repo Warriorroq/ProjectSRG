@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 namespace ProjectSRG.LevelGeneration.PlanetGeneration
 {
@@ -5,6 +6,14 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
     public class ShapeSettings : ScriptableObject
     {
         public float radius = 1;
-        public NoiseSettings noiseSettings;
+        public NoiseLayer[] noiseLayers;
+
+        [System.Serializable]
+        public class NoiseLayer
+        {
+            public bool enabled = true;
+            public bool useFirstLayerAsMask;
+            public NoiseSettings settings;
+        }
     }
 }
