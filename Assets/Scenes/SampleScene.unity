@@ -1074,8 +1074,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05005018, y: -0.000000017363245, z: 8.701241e-10, w: 0.99874675}
-  m_LocalPosition: {x: 3.07, y: 5, z: -95.1}
+  m_LocalRotation: {x: 0.00912927, y: 0.000000017205663, z: -1.570817e-10, w: 0.99995834}
+  m_LocalPosition: {x: 3.07, y: 3, z: -97.6}
   m_LocalScale: {x: 1.0011016, y: 1.028799, z: 0.97699934}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1771,7 +1771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 3
-  m_FollowOffset: {x: 0, y: 5, z: -7.5}
+  m_FollowOffset: {x: 0, y: 3, z: -10}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -2680,8 +2680,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678713742}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05005018, y: -0.000000017363245, z: 8.701241e-10, w: 0.99874675}
-  m_LocalPosition: {x: 3.07, y: 5, z: -95.1}
+  m_LocalRotation: {x: 0.00912927, y: 0.000000017205663, z: -1.570817e-10, w: 0.99995834}
+  m_LocalPosition: {x: 3.07, y: 3, z: -97.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3595,15 +3595,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae3b1230cb9a1c4d92a84ce5c2ec44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _yawTorque: 75
-  _pitchTorque: 100
-  _rollTorque: 100
-  _thrust: 100
-  _upThrust: 50
-  _strafeThrust: 50
-  _thrustGlideReduction: 0.5
-  _upDownGlideReduction: 0.111
-  _leftRightGlideReduction: 0.999
+  _yawTorque: 125
+  _pitchTorque: 200
+  _rollTorque: 200
+  _thrust: 300
+  _upThrust: 100
+  _strafeThrust: 100
+  _thrustGlideReduction: 0.1
+  _upDownGlideReduction: 0.1
+  _leftRightGlideReduction: 0.1
 --- !u!54 &919132148987525810
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3612,7 +3612,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148987525806}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

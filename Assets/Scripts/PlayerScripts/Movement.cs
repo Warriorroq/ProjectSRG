@@ -27,6 +27,7 @@ namespace ProjectSRG.PlayerScripts
         private float _glide;
         private float _verticalGlide;
         private float _horizontalGlide;
+        private Vector3 _torque;
         private Rigidbody _rigitBody;
 
         private float _thrust1D;
@@ -45,22 +46,26 @@ namespace ProjectSRG.PlayerScripts
         private void FixedUpdate()
         {
             HandleMovement();
+            Debug.DrawLine(transform.position + Vector3.up * 2, transform.position + _rigitBody.velocity + Vector3.up * 2);
+            Debug.Log(_rigitBody.velocity.magnitude);
         }
 
         private void HandleMovement()
         {
             UpdateRotationTorque();
 
-            UpdateRelativeForceInDirectionAndApplyGlide(_thrust1D, _thrust, ref _glide, _thrustGlideReduction, Vector3.forward);
-            UpdateRelativeForceInDirectionAndApplyGlide(_upDown1D, _upThrust, ref _verticalGlide, _upDownGlideReduction, Vector3.up);
-            UpdateRelativeForceInDirectionAndApplyGlide(_strafe1D, _strafeThrust, ref _horizontalGlide, _leftRightGlideReduction, Vector3.right);
+            UpdateRelativeForceInDirectionAndApplyGlide(_thrust1D, _thrust, ref _glide, _thrustGlideReduction, transform.forward);
+            UpdateRelativeForceInDirectionAndApplyGlide(_upDown1D, _upThrust, ref _verticalGlide, _upDownGlideReduction, transform.up);
+            UpdateRelativeForceInDirectionAndApplyGlide(_strafe1D, _strafeThrust, ref _horizontalGlide, _leftRightGlideReduction, transform.right);
         }
 
         private void UpdateRotationTorque()
         {
-            _rigitBody.AddRelativeTorque(Vector3.back * (_roll1D * _rollTorque * Time.deltaTime));
-            _rigitBody.AddRelativeTorque(Vector3.right * (Mathf.Clamp(-_pitchYaw.y, -1f, 1f) * _pitchTorque * Time.deltaTime));
-            _rigitBody.AddRelativeTorque(Vector3.up * (Mathf.Clamp(_pitchYaw.x, -1f, 1f) * _yawTorque * Time.deltaTime));
+            _torque = Vector3.zero;
+            _torque += Vector3.back * (_roll1D * _rollTorque * Time.fixedDeltaTime);
+            _torque += Vector3.right * (Mathf.Clamp(-_pitchYaw.y, -1f, 1f) * _pitchTorque * Time.fixedDeltaTime);
+            _torque += Vector3.up * (Mathf.Clamp(_pitchYaw.x, -1f, 1f) * _yawTorque * Time.fixedDeltaTime);
+            _rigitBody.AddRelativeTorque(_torque);
         }
 
         private void UpdateRelativeForceInDirectionAndApplyGlide(float input1D, float thurst, ref float glide, float gliderReduction, Vector3 direction)
@@ -68,12 +73,12 @@ namespace ProjectSRG.PlayerScripts
             if (Mathf.Abs(input1D) > 0.1f)
             {
                 float relativeThurst = input1D * thurst;
-                _rigitBody.AddRelativeForce(direction * (relativeThurst * Time.deltaTime));
+                _rigitBody.AddRelativeForce(direction * (relativeThurst * Time.fixedDeltaTime));
                 glide = relativeThurst;
             }
             else
             {
-                _rigitBody.AddRelativeForce(direction * (glide * Time.deltaTime));
+                _rigitBody.AddRelativeForce(direction * (glide * Time.fixedDeltaTime));
                 glide *= gliderReduction;
             }
         }
