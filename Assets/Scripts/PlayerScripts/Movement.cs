@@ -10,6 +10,7 @@ namespace ProjectSRG.PlayerScripts
         private Vector3 _activeSpeed;
         private Vector3 _directionAcceleration = new Vector3(2.5f, 2f, 2f);
         [SerializeField] private float _lookRateSpeed = 90f;
+
         private Rigidbody _rigitBody;
 
         private float _thrust1D, _strafe1D, _upDown1D, _roll1D;
@@ -27,8 +28,7 @@ namespace ProjectSRG.PlayerScripts
             _activeSpeed.x = Mathf.Lerp(_activeSpeed.x, _strafe1D * _speed.x, _directionAcceleration.x * Time.deltaTime);
             _activeSpeed.z = Mathf.Lerp(_activeSpeed.z, _thrust1D * _speed.z, _directionAcceleration.z * Time.deltaTime);
             _activeSpeed.y = Mathf.Lerp(_activeSpeed.y, _upDown1D * _speed.y, _directionAcceleration.y * Time.deltaTime);
-            _rigitBody.velocity = transform.TransformVector(_activeSpeed);
-            Debug.Log(_roll1D);
+            _rigitBody.velocity = transform.TransformVector(_activeSpeed);            
         }
 
         #region Input Methods
