@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PitchYaw",
+                    "name": "MouseYaw",
                     "type": "PassThrough",
                     "id": "922e87d5-1579-48d0-8a7b-7c75f0196df4",
                     "expectedControlType": "Vector2",
@@ -187,11 +187,11 @@
                 {
                     "name": "",
                     "id": "645dac20-bf40-4c4a-8553-079fa4a0cd07",
-                    "path": "<Mouse>/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PitchYaw",
+                    "action": "MouseYaw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
