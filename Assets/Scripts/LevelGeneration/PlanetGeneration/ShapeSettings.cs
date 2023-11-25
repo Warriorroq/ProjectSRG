@@ -5,5 +5,6 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
     public class ShapeSettings : ScriptableObject
     {
         public float radius = 1;
+        public NoiseSettings noiseSettings;
     }
 }

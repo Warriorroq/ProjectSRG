@@ -5,13 +5,17 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
     public class ShapeGenerator
     {
         private ShapeSettings _shapeSettings;
-
+        private NoiseFilter _noiseFilter;
         public ShapeGenerator(ShapeSettings shapeSettings)
         {
             _shapeSettings = shapeSettings;
+            _noiseFilter = new NoiseFilter(shapeSettings.noiseSettings);
         }
 
         public Vector3 CalculatePointOnThePlanet(Vector3 pointOnUnitySphere)
-            => pointOnUnitySphere * _shapeSettings.radius;
+        {
+            float elevation = _noiseFilter.Evalutate(pointOnUnitySphere);
+            return pointOnUnitySphere * _shapeSettings.radius * (1 + elevation);
+        }
     }
 }

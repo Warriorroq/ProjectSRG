@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d88dc43dbd2b847bf253d26529dc50, type: 3}
   m_Name: PlanetShapeSettings
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 25
+  noiseSettings:
+    numberOfLayers: 5
+    strength: 0.3
+    baseRoughness: 1
+    roughness: 8
+    persistence: 0.4
+    minValue: 0.7
+    centre: {x: 0, y: 0, z: -999}
