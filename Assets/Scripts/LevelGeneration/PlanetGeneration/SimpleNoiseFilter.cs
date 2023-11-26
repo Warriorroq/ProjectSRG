@@ -3,17 +3,17 @@ using UnityEngine;
 
 namespace ProjectSRG.LevelGeneration.PlanetGeneration
 {
-    public class NoiseFilter
+    public class SimpleNoiseFilter : INoiseFilter
     {
         private NoiseSettings settings;
         private SimplexNoise _noise = new SimplexNoise();
 
-        public NoiseFilter(NoiseSettings settings)
+        public SimpleNoiseFilter(NoiseSettings settings)
         {
             this.settings = settings;
         }
 
-        public float Evalutate(Vector3 point)
+        public float Evaluate(Vector3 point)
         {
             //(_noise.Evaluate(point * settings.roughness + settings.centre) + 1) * 0.5f
             float noiseValue = 0;

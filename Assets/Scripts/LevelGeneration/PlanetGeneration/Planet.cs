@@ -7,6 +7,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         [HideInInspector] public bool shapeSettingsFoldout;
         [HideInInspector] public bool colorSettingsFoldout;
         public bool autoUpdate;
+        public bool createMeshColliders;
 
         public ShapeSettings shapeSettings;
         public ColorSettings colorSettings;
@@ -52,15 +53,19 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
             {
                 if (_meshFilters[i] == null || _meshFilters.Count() < 6)
                 {
-                    GameObject mesh = new GameObject($"Planet Mesh {i}");
-                    mesh.transform.parent = transform;
-                    mesh.transform.localPosition = Vector3.zero;
-                    mesh.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-                    _meshFilters[i] = mesh.AddComponent<MeshFilter>();
+                    GameObject obj = new GameObject($"Planet Mesh {i}");
+                    obj.transform.parent = transform;
+                    obj.transform.localPosition = Vector3.zero;
+                    obj.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+                    _meshFilters[i] = obj.AddComponent<MeshFilter>();
                     _meshFilters[i].sharedMesh = new Mesh();
-                    //var meshCollider = mesh.AddComponent<MeshCollider>();
-                    //meshCollider.convex = true;
-                    //meshCollider.sharedMesh = _meshFilters[i].sharedMesh;
+                    if (createMeshColliders)
+                    {
+                        var meshCollider = obj.AddComponent<MeshCollider>();
+                        meshCollider.sharedMesh = new Mesh();
+                        meshCollider.convex = true;
+                        meshCollider.sharedMesh = _meshFilters[i].sharedMesh;
+                    }
 
                 }
                 _terrainFaces[i] = new TerrainFace(_shapeGenerator, _meshFilters[i].sharedMesh, _resolution, directions[i]);
@@ -72,8 +77,12 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         
         private void GenerateMesh()
         {
-            foreach (TerrainFace terrainFace in _terrainFaces)
-                terrainFace.ConstructMesh();
+            for (int i =0; i< _terrainFaces.Length;i++)
+            {
+                _terrainFaces[i].ConstructMesh();
+                if (createMeshColliders && _meshFilters[i].TryGetComponent(out MeshCollider collider))
+                    collider.sharedMesh = _meshFilters[i].sharedMesh;
+            }
         }
 
         private void GenerateColors()
