@@ -58,6 +58,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                 if (_meshFilters[i] == null || _meshFilters.Count() < 6)
                 {
                     GameObject obj = new GameObject($"Planet Mesh {i}");
+                    obj.layer = gameObject.layer;
                     obj.transform.parent = transform;
                     obj.transform.localPosition = Vector3.zero;
                     obj.AddComponent<MeshRenderer>();
@@ -72,7 +73,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                     }
 
                 }
-                _meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
+                _meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = new Material(colorSettings.planetMaterial);
                 _terrainFaces[i] = new TerrainFace(_shapeGenerator, _meshFilters[i].sharedMesh, _resolution, directions[i]);
                 bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
                 _meshFilters[i].gameObject.SetActive(renderFace);

@@ -46,7 +46,7 @@ MonoBehaviour:
         m_NumColorKeys: 5
         m_NumAlphaKeys: 2
       tint: {r: 0, g: 0, b: 0, a: 0}
-      startHeight: 0.025
+      startHeight: 0
       tintPercent: 0.5
     - gradient:
         serializedVersion: 2
@@ -79,7 +79,7 @@ MonoBehaviour:
         m_NumColorKeys: 7
         m_NumAlphaKeys: 2
       tint: {r: 0, g: 0, b: 0, a: 0}
-      startHeight: 0.081
+      startHeight: 0.042
       tintPercent: 0.3
     - gradient:
         serializedVersion: 2
@@ -112,8 +112,8 @@ MonoBehaviour:
         m_NumColorKeys: 7
         m_NumAlphaKeys: 2
       tint: {r: 0, g: 0, b: 0, a: 0}
-      startHeight: 0.275
-      tintPercent: 0.3
+      startHeight: 0.253
+      tintPercent: 0.261
     - gradient:
         serializedVersion: 2
         key0: {r: 0.35843375, g: 0.2936204, b: 0.9547169, a: 1}
@@ -145,7 +145,7 @@ MonoBehaviour:
         m_NumColorKeys: 7
         m_NumAlphaKeys: 2
       tint: {r: 0, g: 0, b: 0, a: 0}
-      startHeight: 0.657
+      startHeight: 0.791
       tintPercent: 0.3
     - gradient:
         serializedVersion: 2
@@ -201,4 +201,4 @@ MonoBehaviour:
         weightMultilier: 0.8
     noiseOffset: 0.98
     noiseStrength: 0.16
-    blendAmount: 0.25
+    blendAmount: 0.196
