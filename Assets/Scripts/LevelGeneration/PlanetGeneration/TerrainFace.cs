@@ -25,6 +25,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         public void ConstructMesh()
         {
             Vector3[] vertices = new Vector3[_resolution * _resolution];
+            Vector2[] uv = _mesh.uv;
             var resolutionMinus1 = _resolution - 1;
             int[] triangles = new int[resolutionMinus1 * resolutionMinus1 * 6];
             int verticeIndex = 0;
@@ -52,6 +53,26 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
             _mesh.vertices = vertices;
             _mesh.triangles = triangles;
             _mesh.RecalculateNormals();
+            _mesh.uv = uv;
+        }
+
+        public void UpdateUVs(ColorGenerator colorGenerator)
+        {
+            Vector2[] uv = new Vector2[_resolution * _resolution];
+            var resolutionMinus1 = _resolution - 1;
+            int verticeIndex = 0;
+            for (int y = 0; y < _resolution; y++)
+            {
+                for (int x = 0; x < _resolution; x++)
+                {
+                    Vector2 percent = new Vector2(x, y) / resolutionMinus1;
+                    Vector3 pointOnUnitCube = _localUp + (percent.x - 0.5f) * 2 * _axisA + (percent.y - 0.5f) * 2 * _axisB;
+                    Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
+
+                    uv[verticeIndex++] = new Vector2(colorGenerator.BiomePercentFromPoint(pointOnUnitSphere), 0);
+                }
+            }
+            _mesh.uv = uv;
         }
     }
 }

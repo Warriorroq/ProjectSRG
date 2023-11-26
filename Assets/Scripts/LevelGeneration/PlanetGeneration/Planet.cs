@@ -84,7 +84,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         
         private void GenerateMesh()
         {
-            for (int i =0; i< _terrainFaces.Length;i++)
+            for (int i = 0; i < _terrainFaces.Length; i++)
             {
                 if (!_meshFilters[i].gameObject.activeSelf)
                     continue;
@@ -98,7 +98,14 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         }
 
         private void GenerateColors()
-            =>_colorGenerator.UpdateColors();
+        {
+            _colorGenerator.UpdateColors();
+            for(int i = 0 ; i < _terrainFaces.Length; i++)
+            {
+                if (_meshFilters[i].gameObject.activeSelf)
+                    _terrainFaces[i].UpdateUVs(_colorGenerator);
+            }
+        }
 
         public enum FaceRenderMask
         {
