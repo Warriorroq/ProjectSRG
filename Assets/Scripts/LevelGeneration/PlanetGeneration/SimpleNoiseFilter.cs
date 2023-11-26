@@ -5,12 +5,12 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
 {
     public class SimpleNoiseFilter : INoiseFilter
     {
-        private NoiseSettings settings;
+        private NoiseSettings.SimpleNoiseSettings settings;
         private SimplexNoise _noise = new SimplexNoise();
 
         public SimpleNoiseFilter(NoiseSettings settings)
         {
-            this.settings = settings;
+            this.settings = settings.simpleNoiseSettings;
         }
 
         public float Evaluate(Vector3 point)

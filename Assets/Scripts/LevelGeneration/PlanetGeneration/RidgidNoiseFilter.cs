@@ -6,12 +6,12 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
 {
     public class RidgidNoiseFilter : INoiseFilter
     {
-        private NoiseSettings settings;
+        private NoiseSettings.RidgidNoiseSettings settings;
         private SimplexNoise _noise = new SimplexNoise();
 
         public RidgidNoiseFilter(NoiseSettings settings)
         {
-            this.settings = settings;
+            this.settings = settings.ridgidNoiseSettings;
         }
 
         public float Evaluate(Vector3 point)
@@ -27,7 +27,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                 float v = 1 - Mathf.Abs(_noise.Evaluate(point * frequency + settings.centre));
                 v *= v;
                 v *= weight;
-                weight = v;
+                weight = Mathf.Clamp01(v * settings.weightMultilier);
                 noiseValue += v * amplitude;
                 frequency *= settings.roughness;
                 amplitude *= settings.persistence;

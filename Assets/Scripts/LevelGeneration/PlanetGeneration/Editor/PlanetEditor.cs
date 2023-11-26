@@ -1,15 +1,14 @@
-
 using UnityEditor;
 using UnityEngine;
 
-namespace ProjectSRG.LevelGeneration.PlanetGeneration.Editor
+namespace ProjectSRG.LevelGeneration.PlanetGeneration
 {
     [CustomEditor(typeof(Planet))]
-    public class PlanetEditor : UnityEditor.Editor
+    public class PlanetEditor : Editor
     {
         private Planet _planet;
-        private UnityEditor.Editor shapeEditor;
-        private UnityEditor.Editor colorEditor;
+        private Editor shapeEditor;
+        private Editor colorEditor;
         private void OnEnable()
         {
             _planet = (Planet)target;

@@ -9,6 +9,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         public bool autoUpdate;
         public bool createMeshColliders;
 
+        public FaceRenderMask faceRenderMask;
         public ShapeSettings shapeSettings;
         public ColorSettings colorSettings;
 
@@ -47,7 +48,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                 _meshFilters = new MeshFilter[6];
             _terrainFaces = new TerrainFace[6];
 
-            Vector3[] directions = new Vector3[] { Vector3.up, Vector3.down, Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+            Vector3[] directions = new Vector3[] { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back};
 
             for (int i = 0; i < 6; i++)
             {
@@ -69,6 +70,8 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
 
                 }
                 _terrainFaces[i] = new TerrainFace(_shapeGenerator, _meshFilters[i].sharedMesh, _resolution, directions[i]);
+                bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
+                _meshFilters[i].gameObject.SetActive(renderFace);
             }
 
             if (TryGetComponent<SphereCollider>(out var collider))
@@ -79,6 +82,9 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         {
             for (int i =0; i< _terrainFaces.Length;i++)
             {
+                if (!_meshFilters[i].gameObject.activeSelf)
+                    continue;
+
                 _terrainFaces[i].ConstructMesh();
                 if (createMeshColliders && _meshFilters[i].TryGetComponent(out MeshCollider collider))
                     collider.sharedMesh = _meshFilters[i].sharedMesh;
@@ -88,9 +94,18 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         private void GenerateColors()
         {
             foreach(var meshFilther in _meshFilters)
-            {
                 meshFilther.GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.colorOfPlanet;
-            }
+        }
+
+        public enum FaceRenderMask
+        {
+            All,
+            Top, 
+            Bottom,
+            Left,
+            Right,
+            Front,
+            Back
         }
     }
 }
