@@ -4,9 +4,10 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
 {
     public class ShapeGenerator
     {
+        public MinMax elevationMinMax;
         private ShapeSettings _shapeSettings;
         private INoiseFilter[] _noiseFilters;
-        public ShapeGenerator(ShapeSettings shapeSettings)
+        public void UpdateSettings(ShapeSettings shapeSettings)
         {
             _shapeSettings = shapeSettings;
             var shapeNoiseLayers = shapeSettings.noiseLayers;
@@ -14,6 +15,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
 
             for (int i = 0; i < shapeNoiseLayers.Length; i++)
                 _noiseFilters[i] = NoiseFilterFactory.CreateNoiseFilter(shapeSettings.noiseLayers[i].settings);
+            elevationMinMax = new MinMax();
         }
 
         public Vector3 CalculatePointOnThePlanet(Vector3 pointOnUnitySphere)
@@ -35,7 +37,9 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                 float mask = _shapeSettings.noiseLayers[i].useFirstLayerAsMask ? firstLayerValue : 1;
                 elevation += _noiseFilters[i].Evaluate(pointOnUnitySphere) * mask;
             }
-            return pointOnUnitySphere * _shapeSettings.radius * (1 + elevation);
+            elevation = _shapeSettings.radius * (1 + elevation);
+            elevationMinMax.AddValue(elevation);
+            return pointOnUnitySphere * elevation;
         }
     }
 }

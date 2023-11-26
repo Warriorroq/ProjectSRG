@@ -13,7 +13,8 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         public ShapeSettings shapeSettings;
         public ColorSettings colorSettings;
 
-        private ShapeGenerator _shapeGenerator;
+        private ShapeGenerator _shapeGenerator = new ShapeGenerator();
+        private ColorGenerator _colorGenerator = new ColorGenerator();
 
         [SerializeField][Range(2, 256)] private int _resolution;
         [SerializeField] private MeshFilter[] _meshFilters;
@@ -43,7 +44,9 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
 
         private void Initialize()
         {
-            _shapeGenerator = new ShapeGenerator(shapeSettings);
+            _shapeGenerator.UpdateSettings(shapeSettings);
+            _colorGenerator.UpdateSettings(colorSettings);
+
             if (_meshFilters == null || _meshFilters.Count() == 0)
                 _meshFilters = new MeshFilter[6];
             _terrainFaces = new TerrainFace[6];
@@ -57,7 +60,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                     GameObject obj = new GameObject($"Planet Mesh {i}");
                     obj.transform.parent = transform;
                     obj.transform.localPosition = Vector3.zero;
-                    obj.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+                    obj.AddComponent<MeshRenderer>();
                     _meshFilters[i] = obj.AddComponent<MeshFilter>();
                     _meshFilters[i].sharedMesh = new Mesh();
                     if (createMeshColliders)
@@ -69,6 +72,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                     }
 
                 }
+                _meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
                 _terrainFaces[i] = new TerrainFace(_shapeGenerator, _meshFilters[i].sharedMesh, _resolution, directions[i]);
                 bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
                 _meshFilters[i].gameObject.SetActive(renderFace);
@@ -89,13 +93,12 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                 if (createMeshColliders && _meshFilters[i].TryGetComponent(out MeshCollider collider))
                     collider.sharedMesh = _meshFilters[i].sharedMesh;
             }
+
+            _colorGenerator.UpdateElevation(_shapeGenerator.elevationMinMax);
         }
 
         private void GenerateColors()
-        {
-            foreach(var meshFilther in _meshFilters)
-                meshFilther.GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.colorOfPlanet;
-        }
+            =>_colorGenerator.UpdateColors();
 
         public enum FaceRenderMask
         {
