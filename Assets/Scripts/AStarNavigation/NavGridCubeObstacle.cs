@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ProjectSRG.AStarNavigation
 {
@@ -25,6 +26,8 @@ namespace ProjectSRG.AStarNavigation
         {
             if (_lastPosition == transform.position)
                 return;
+            var scale = transform.localScale;
+            var size = new Vector3(this.size.x * scale.x, this.size.y * scale.y, this.size.z * scale.z);
             _grid.ClearGridInBoxVolume(_lastPosition, size);
             _grid.RecalculateGridInBoxVolume(transform.position, size, movementPenalty);
             _lastPosition = transform.position;
@@ -32,6 +35,8 @@ namespace ProjectSRG.AStarNavigation
 
         private void OnDrawGizmos()
         {
+            var scale = transform.localScale;
+            var size = new Vector3(this.size.x * scale.x, this.size.y * scale.y, this.size.z * scale.z);
             Gizmos.DrawSphere(transform.position - size / 2, 1);
             Gizmos.DrawSphere(transform.position + size / 2, 1);
             Gizmos.color = Color.grey;

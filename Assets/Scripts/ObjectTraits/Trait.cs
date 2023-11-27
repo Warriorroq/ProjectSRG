@@ -14,6 +14,7 @@ namespace ProjectSRG.ObjectTraits
         {
             this.name = name;
             _value = value;
+            onValueChanged = new UnityEvent<T>();
         }
 
         public T Value

@@ -24,7 +24,7 @@ namespace ProjectSRG.ObjectTraits
                 throw new System.Exception($"Awake wasn't played");
 
             if (!_traits.ContainsKey(name))
-                throw new System.Exception($"Trait type of {nameof(T)} by name {name} doesn't exist in TraitsDictionary");
+                return default(T);
 
             return (T)_traits[name];
         }

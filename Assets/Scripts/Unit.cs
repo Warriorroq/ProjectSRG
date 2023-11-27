@@ -8,10 +8,7 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         traits.Awake();
+        //traits.GetTrait<Trait<float>>("ShipTemperature").onValueChanged.AddListener(x => Debug.Log(x));
         //traits.DebugTraits();
-    }
-    private void Update()
-    {
-        
     }
 }
