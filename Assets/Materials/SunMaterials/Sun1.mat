@@ -99,7 +99,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
-    - _CellDencity: 19
+    - _CellDencity: 90.3
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -122,7 +122,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SolarFlare: 60
     - _SpecularHighlights: 1
-    - _SpeedOfCells: 0.75
+    - _SpeedOfCells: 1.71
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0

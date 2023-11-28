@@ -1,3 +1,4 @@
+using ProjectSRG.ObjectTraits;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,7 @@ namespace ProjectSRG.PlayerScripts
         [SerializeField] private float _lookRateSpeed = 90f;
 
         private Rigidbody _rigidBody;
+        private Trait<float> _speedMultiplier;
 
         private float _thrust1D, _strafe1D, _upDown1D, _roll1D;
         private Vector2 _mouseYaw, _mouseDistance;
@@ -20,6 +22,7 @@ namespace ProjectSRG.PlayerScripts
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
+            _speedMultiplier = GetComponent<Unit>().traits.GetTrait<Trait<float>>("Speed");
         }
 
         private void FixedUpdate()
@@ -28,9 +31,9 @@ namespace ProjectSRG.PlayerScripts
             Ray ray = new Ray(transform.position, transform.forward);
             _crossHair.position = Camera.main.WorldToScreenPoint(ray.GetPoint(20f));
 
-            _activeSpeed.x = Mathf.Lerp(_activeSpeed.x, _strafe1D * _speed.x, _directionAcceleration.x * Time.fixedDeltaTime);
-            _activeSpeed.z = Mathf.Lerp(_activeSpeed.z, _thrust1D * _speed.z, _directionAcceleration.z * Time.fixedDeltaTime);
-            _activeSpeed.y = Mathf.Lerp(_activeSpeed.y, _upDown1D * _speed.y, _directionAcceleration.y * Time.fixedDeltaTime);
+            _activeSpeed.x = Mathf.Lerp(_activeSpeed.x, _strafe1D * _speed.x * _speedMultiplier.Value, _directionAcceleration.x * Time.fixedDeltaTime);
+            _activeSpeed.z = Mathf.Lerp(_activeSpeed.z, _thrust1D * _speed.z * _speedMultiplier.Value, _directionAcceleration.z * Time.fixedDeltaTime);
+            _activeSpeed.y = Mathf.Lerp(_activeSpeed.y, _upDown1D * _speed.y * _speedMultiplier.Value, _directionAcceleration.y * Time.fixedDeltaTime);
             _rigidBody.velocity = transform.TransformVector(_activeSpeed);
             _rigidBody.angularVelocity = Vector3.zero;
         }
