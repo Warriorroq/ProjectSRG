@@ -1,7 +1,11 @@
+using ProjectSRG.AStarNavigation;
 using ProjectSRG.Game;
+using ProjectSRG.LevelGeneration.PlanetGeneration;
 using ProjectSRG.Utils.Maths;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace ProjectSRG.LevelGeneration.SectorGeneration
 {
@@ -9,19 +13,72 @@ namespace ProjectSRG.LevelGeneration.SectorGeneration
     public class SolarSystemGenerator
     {
         public Vector3 maxOffSet;
-        public List<Material> sunMaterials;
-        public Vector2 maxScaleOfSun;
+
+        [Header("=== Sun settings ===")]
         public GameObject sunPrefab;
+        public List<Material> sunMaterials;
+        public Vector2 minMaxLocalScaleOfSun;
+
+        [Header("=== Planet settings ===")]
+        public Planet planetPrefab;
+        public Vector2 minMaxLocalScaleOfPlanets;
+        public Vector2 minMaxRotationSpeedOfPlanets;
+        public Vector3 randomizedNoiseCenter;
+        public Vector2Int amountOfPlanets;
+
+        public List<ShapeSettings> planetShapeSettings;
+        public List<ColorSettings> planetColorSettings;
+
         public void Generate(Sector sector)
         {
-            GenerateAndApplySun(sector);
+            var solarSystem = sector.AddComponent<SolarSystem>();
+            GenerateAndApplySun(solarSystem);
+            GeneratePlanetsInSolarSystem(solarSystem);
         }
 
-        private GameObject GenerateAndApplySun(Sector sector)
+        private void GeneratePlanetsInSolarSystem(SolarSystem system)
+        {
+            int amount = Random.Range(amountOfPlanets.x, amountOfPlanets.y);
+            while (amount > 0)
+            {
+                var go = SolarSystem.Instantiate(planetPrefab);
+                go.transform.parent = system.transform;
+                go.shapeSettings = planetShapeSettings.TakeRandom();
+                go.colorSettings = planetColorSettings.TakeRandom();
+                go.transform.localScale *= Random.Range(minMaxLocalScaleOfPlanets.x, minMaxLocalScaleOfPlanets.y);
+                foreach (var item in go.shapeSettings.noiseLayers)
+                {
+                    item.settings.simpleNoiseSettings.centre = randomizedNoiseCenter.GetRandomValueFromCurrentVector();
+                    item.settings.ridgidNoiseSettings.centre = randomizedNoiseCenter.GetRandomValueFromCurrentVector();
+                }
+                go.shapeSettings.radius = go.transform.localScale.y / 2;
+                go.Initialize();
+
+                int i = 30;
+                while (i > 0)
+                {
+                    var position = maxOffSet.GetRandomValueFromCurrentVector();
+                    if (!Physics.CheckSphere(position, go.transform.localScale.y*1.2f))
+                    {
+                        go.transform.localPosition = position;
+                        system.AddBody(go.gameObject, Random.Range(minMaxRotationSpeedOfPlanets.x, minMaxRotationSpeedOfPlanets.y));
+                        go.GeneratePlanet();
+                        go.GeneratePlanet();
+                        go.GeneratePlanet();
+                        amount--;
+                        break;
+                    }
+                    i--;
+                }
+            }
+        }
+
+        private GameObject GenerateAndApplySun(SolarSystem system)
         {
             var sun = Sector.Instantiate(sunPrefab);
-            sun.transform.parent = sector.transform;
-            sun.transform.localScale *= Random.Range(maxScaleOfSun.x, maxScaleOfSun.y);
+            system.sun = sun;
+            sun.transform.parent = system.transform;
+            sun.transform.localScale *= Random.Range(minMaxLocalScaleOfSun.x, minMaxLocalScaleOfSun.y);
             int i = 100;
             while (i > 0)
             {

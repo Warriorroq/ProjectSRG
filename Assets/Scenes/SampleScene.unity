@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sectorSpawnDistance: 1140
-  speedOfSpaceThread: 100
+  speedOfSpaceThread: 10
   spaceVectorMovementDirection: {x: 1, y: 0, z: 0}
   _possibleAbsoluteChangeOfVector: {x: 0.13, y: 0.05, z: 0.13}
   _strengthOfChangingVector: 1
@@ -293,14 +293,21 @@ MonoBehaviour:
             m_CallState: 2
   solarSystemGenerator:
     maxOffSet: {x: 200, y: 500, z: 200}
+    sunPrefab: {fileID: 8541068470052375165, guid: 3e81341941e748a48b76c5e186c6429f, type: 3}
     sunMaterials:
     - {fileID: 2100000, guid: 9cf90bb0216f2d54fb3ef5bb1d5aeefa, type: 2}
-    - {fileID: 2100000, guid: 5a62d949e83fe3f4f91577c1fcb5da06, type: 2}
-    - {fileID: 2100000, guid: 2bdee23e99b06b940bbb343248dca2c4, type: 2}
-    - {fileID: 2100000, guid: f4443989939549e4387c4e9e6596a2cf, type: 2}
-    - {fileID: 2100000, guid: 7990a808e3e0def4994f771074743015, type: 2}
-    maxScaleOfSun: {x: 1, y: 1.4}
-    sunPrefab: {fileID: 8541068470052375165, guid: 3e81341941e748a48b76c5e186c6429f, type: 3}
+    minMaxLocalScaleOfSun: {x: 1.4, y: 2}
+    planetPrefab: {fileID: 5159244258355127449, guid: 10df9ab6f36941a47acacda785a019dd, type: 3}
+    minMaxLocalScaleOfPlanets: {x: 80, y: 300}
+    minMaxRotationSpeedOfPlanets: {x: 15, y: 40}
+    randomizedNoiseCenter: {x: 1000, y: 500, z: 1000}
+    amountOfPlanets: {x: 4, y: 9}
+    planetShapeSettings:
+    - {fileID: 11400000, guid: 19763de9a9cb0b547b7f4c4062997fb2, type: 2}
+    - {fileID: 11400000, guid: d02a815e09c3eb4459dd557e341951fe, type: 2}
+    planetColorSettings:
+    - {fileID: 11400000, guid: 9baeff197826c754fab518707966e03d, type: 2}
+    - {fileID: 11400000, guid: f5ddf12a163dcd2409406044f97e75c7, type: 2}
 --- !u!1 &214178241
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,10 +7,17 @@ namespace ProjectSRG.AStarNavigation
     {
         public Vector3 size;
         public int movementPenalty;
+        public float updatingRate;
 
         private Grid _grid;
-        [SerializeField] private float _updatingRate;
         [SerializeField] private Vector3 _lastPosition;
+
+        public void RestartState()
+        {
+            StopAllCoroutines();
+            InvokeRepeating(nameof(UpdateWalkableState), updatingRate, updatingRate);
+        }
+
         private void Awake()
         {
             _grid = FindObjectOfType<Grid>();
@@ -19,7 +26,7 @@ namespace ProjectSRG.AStarNavigation
 
         private void Start()
         {
-            InvokeRepeating(nameof(UpdateWalkableState), _updatingRate, _updatingRate);
+            InvokeRepeating(nameof(UpdateWalkableState), updatingRate, updatingRate);
         }
 
         private void UpdateWalkableState()

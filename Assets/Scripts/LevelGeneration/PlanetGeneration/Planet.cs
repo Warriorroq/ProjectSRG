@@ -16,7 +16,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
         private ShapeGenerator _shapeGenerator = new ShapeGenerator();
         private ColorGenerator _colorGenerator = new ColorGenerator();
 
-        [SerializeField][Range(2, 256)] private int _resolution;
+        [Range(2, 256)] public int resolution;
         [SerializeField] private MeshFilter[] _meshFilters;
         private TerrainFace[] _terrainFaces;
 
@@ -42,7 +42,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
             GenerateMesh();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             _shapeGenerator.UpdateSettings(shapeSettings);
             _colorGenerator.UpdateSettings(colorSettings);
@@ -74,7 +74,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
 
                 }
                 _meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = new Material(colorSettings.planetMaterial);
-                _terrainFaces[i] = new TerrainFace(_shapeGenerator, _meshFilters[i].sharedMesh, _resolution, directions[i]);
+                _terrainFaces[i] = new TerrainFace(_shapeGenerator, _meshFilters[i].sharedMesh, resolution, directions[i]);
                 bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
                 _meshFilters[i].gameObject.SetActive(renderFace);
             }
@@ -83,7 +83,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
                 collider.radius = shapeSettings.radius;
         }
         
-        private void GenerateMesh()
+        public void GenerateMesh()
         {
             for (int i = 0; i < _terrainFaces.Length; i++)
             {
@@ -98,7 +98,7 @@ namespace ProjectSRG.LevelGeneration.PlanetGeneration
             _colorGenerator.UpdateElevation(_shapeGenerator.elevationMinMax);
         }
 
-        private void GenerateColors()
+        public void GenerateColors()
         {
             _colorGenerator.UpdateColors();
             for(int i = 0 ; i < _terrainFaces.Length; i++)

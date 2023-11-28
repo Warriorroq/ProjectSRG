@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d88dc43dbd2b847bf253d26529dc50, type: 3}
   m_Name: Smol1
   m_EditorClassIdentifier: 
-  radius: 34
+  radius: 10
   noiseLayers:
   - enabled: 1
     useFirstLayerAsMask: 1
@@ -25,7 +25,7 @@ MonoBehaviour:
         roughness: 2.25
         persistence: 1.53
         minValue: 2.73
-        centre: {x: 31.25, y: 29.26, z: 0}
+        centre: {x: 16.67035, y: 719.938, z: -88.94095}
       ridgidNoiseSettings:
         numberOfLayers: 0
         strength: 0
@@ -33,5 +33,5 @@ MonoBehaviour:
         roughness: 0
         persistence: 0
         minValue: 0
-        centre: {x: 0, y: 0, z: 0}
+        centre: {x: -104.6785, y: -968.4861, z: -659.3358}
         weightMultilier: 0

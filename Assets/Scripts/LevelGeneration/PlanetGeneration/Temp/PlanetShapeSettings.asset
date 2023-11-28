@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d88dc43dbd2b847bf253d26529dc50, type: 3}
   m_Name: PlanetShapeSettings
   m_EditorClassIdentifier: 
-  radius: 60
+  radius: 10
   noiseLayers:
   - enabled: 1
     useFirstLayerAsMask: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
         roughness: 2.64
         persistence: 0.5
         minValue: 0.71
-        centre: {x: 32.7, y: 94.1, z: -1}
+        centre: {x: -967.2396, y: 923.1179, z: -443.56546}
       ridgidNoiseSettings:
         numberOfLayers: 1
         strength: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
         roughness: 2
         persistence: 0.5
         minValue: 0
-        centre: {x: 0, y: 0, z: 0}
+        centre: {x: 873.8556, y: -713.67053, z: -790.801}
         weightMultilier: 0.8
   - enabled: 1
     useFirstLayerAsMask: 1
@@ -46,7 +46,7 @@ MonoBehaviour:
         roughness: 2
         persistence: 0.5
         minValue: 0
-        centre: {x: 0, y: 0, z: 0}
+        centre: {x: 731.7948, y: 83.97522, z: 825.7191}
       ridgidNoiseSettings:
         numberOfLayers: 4
         strength: 1
@@ -54,5 +54,5 @@ MonoBehaviour:
         roughness: 19.84
         persistence: 0.5
         minValue: 0
-        centre: {x: -0.25, y: -22.89, z: -1.56}
+        centre: {x: 508.47885, y: -510.47778, z: 772.4342}
         weightMultilier: 0.95
