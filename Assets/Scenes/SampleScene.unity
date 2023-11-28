@@ -245,7 +245,8 @@ MonoBehaviour:
   sectorSpawnDistance: 1140
   speedOfSpaceThread: 10
   spaceVectorMovementDirection: {x: 1, y: 0, z: 0}
-  _possibleAbsoluteChangeOfVector: {x: 0.13, y: 0.05, z: 0.13}
+  updateRate: 1
+  _possibleAbsoluteChangeOfVector: {x: 0.2, y: 0.1, z: 0.2}
   _strengthOfChangingVector: 1
   _maxPlayerSqrtDistance: 1000000
   _sectorDespawnSqrtDistance: 1690000
@@ -292,14 +293,14 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
   solarSystemGenerator:
-    maxOffSet: {x: 200, y: 500, z: 200}
+    maxOffSet: {x: 500, y: 200, z: 500}
     sunPrefab: {fileID: 8541068470052375165, guid: 3e81341941e748a48b76c5e186c6429f, type: 3}
     sunMaterials:
     - {fileID: 2100000, guid: 9cf90bb0216f2d54fb3ef5bb1d5aeefa, type: 2}
-    minMaxLocalScaleOfSun: {x: 1.4, y: 2}
+    minMaxLocalScaleOfSun: {x: 1.1, y: 1.4}
     planetPrefab: {fileID: 5159244258355127449, guid: 10df9ab6f36941a47acacda785a019dd, type: 3}
     minMaxLocalScaleOfPlanets: {x: 80, y: 300}
-    minMaxRotationSpeedOfPlanets: {x: 15, y: 40}
+    minMaxRotationSpeedOfPlanets: {x: 2, y: 6}
     randomizedNoiseCenter: {x: 1000, y: 500, z: 1000}
     amountOfPlanets: {x: 4, y: 9}
     planetShapeSettings:
@@ -699,7 +700,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   gridWorldSize: {x: 1000, y: 1000, z: 1000}
-  nodeRadius: 10
+  nodeRadius: 12
   walkableRegions: []
   obstacleProximityPenalty: 10
   gridWasDirty:
@@ -791,8 +792,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 80
+  far clip plane: 1500
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1166,10 +1167,10 @@ MonoBehaviour:
   m_LookAt: {fileID: 1493687831}
   m_Follow: {fileID: 543450652659589140}
   m_Lens:
-    FieldOfView: 80
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 1500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}

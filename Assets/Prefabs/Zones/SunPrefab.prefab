@@ -259,5 +259,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 1.1, y: 1.1, z: 1.1}
   movementPenalty: 1026
-  updatingRate: 0.15
+  updatingRate: 0.2
   _lastPosition: {x: 0, y: 0, z: 0}

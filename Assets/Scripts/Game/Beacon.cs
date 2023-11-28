@@ -10,6 +10,7 @@ namespace ProjectSRG.Game
         public float sectorSpawnDistance;
         public float speedOfSpaceThread;
         public Vector3 spaceVectorMovementDirection = Vector3.forward;
+        public float updateRate;
         [HideInInspector] public Transform playerTransform { get; private set; }
 
         [SerializeField] private Vector3 _possibleAbsoluteChangeOfVector;
@@ -25,6 +26,7 @@ namespace ProjectSRG.Game
             playerTransform = GameObject.FindGameObjectWithTag(_playerTag).transform;
             _currentSectors = new List<Sector>();
             _lastSectorSqrtDistanceForSpawnNewOne = sectorSpawnDistance * sectorSpawnDistance * 1.01f;
+            InvokeRepeating(nameof(UpdateMap), 0, updateRate);
         }
 
         private void Start()
@@ -33,18 +35,22 @@ namespace ProjectSRG.Game
                 _currentSectors.Add(SectorSpawner.Instance.GetNewSector());
         }
 
-        private void Update()
+        private void UpdateMap()
         {
             ChangeDirectionOfMovement();
             UpdatePlayerState();
             UpdateSector();
-            Debug.DrawRay(transform.position, spaceVectorMovementDirection * 10f,Color.red);
+        }
+
+        private void Update()
+        {
+            Debug.DrawRay(transform.position, spaceVectorMovementDirection * 10f, Color.red);
         }
 
         private void ChangeDirectionOfMovement()
         {
             Vector3 randomizedDirection = _possibleAbsoluteChangeOfVector.GetRandomValueFromCurrentVector();
-            randomizedDirection *= (Time.fixedDeltaTime * _strengthOfChangingVector);
+            randomizedDirection *= _strengthOfChangingVector;
             spaceVectorMovementDirection += randomizedDirection;
             spaceVectorMovementDirection = spaceVectorMovementDirection.normalized;
         }

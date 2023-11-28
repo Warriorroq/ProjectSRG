@@ -54,12 +54,20 @@ namespace ProjectSRG.LevelGeneration.SectorGeneration
                 go.shapeSettings.radius = go.transform.localScale.y / 2;
                 go.Initialize();
 
+                var minDistance = system.sun.transform.localScale.y + go.transform.localScale.y;
+                minDistance *= minDistance;
                 int i = 30;
                 while (i > 0)
                 {
                     var position = maxOffSet.GetRandomValueFromCurrentVector();
-                    if (!Physics.CheckSphere(position, go.transform.localScale.y*1.2f))
+                    if (!Physics.CheckSphere(position, go.transform.localScale.y * 2f))
                     {
+                        if (Vector3.SqrMagnitude(go.transform.localPosition - system.sun.transform.position) < minDistance)
+                        {
+                            amount--;
+                            continue;
+                        }
+
                         go.transform.localPosition = position;
                         system.AddBody(go.gameObject, Random.Range(minMaxRotationSpeedOfPlanets.x, minMaxRotationSpeedOfPlanets.y));
                         go.GeneratePlanet();
@@ -70,6 +78,9 @@ namespace ProjectSRG.LevelGeneration.SectorGeneration
                     }
                     i--;
                 }
+
+                if(i == 0)
+                    GameObject.Destroy(go);
             }
         }
 
