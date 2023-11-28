@@ -16,7 +16,7 @@ namespace ProjectSRG.PlayerScripts
         private float _thrust1D, _strafe1D, _upDown1D, _roll1D;
         private Vector2 _mouseYaw, _mouseDistance;
         private Vector2 _screenCenter = new Vector2(Screen.width, Screen.height)/2;
-
+        [SerializeField] private RectTransform _crossHair;
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
@@ -25,6 +25,9 @@ namespace ProjectSRG.PlayerScripts
         private void FixedUpdate()
         {
             transform.Rotate(-_mouseDistance.y * _lookRateSpeed * Time.fixedDeltaTime, _mouseDistance.x * _lookRateSpeed * Time.fixedDeltaTime, _roll1D * _lookRateSpeed * Time.fixedDeltaTime, Space.Self);
+            Ray ray = new Ray(transform.position, transform.forward);
+            _crossHair.position = Camera.main.WorldToScreenPoint(ray.GetPoint(20f));
+
             _activeSpeed.x = Mathf.Lerp(_activeSpeed.x, _strafe1D * _speed.x, _directionAcceleration.x * Time.fixedDeltaTime);
             _activeSpeed.z = Mathf.Lerp(_activeSpeed.z, _thrust1D * _speed.z, _directionAcceleration.z * Time.fixedDeltaTime);
             _activeSpeed.y = Mathf.Lerp(_activeSpeed.y, _upDown1D * _speed.y, _directionAcceleration.y * Time.fixedDeltaTime);
