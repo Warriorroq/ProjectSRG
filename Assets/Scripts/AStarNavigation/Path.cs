@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 namespace ProjectSRG.AStarNavigation
 {
 	[System.Serializable]
@@ -9,7 +10,7 @@ namespace ProjectSRG.AStarNavigation
 		public readonly Line[] turnBoundaries;
 		public readonly int finishLineIndex;
 		public readonly int slowDownIndex;
-
+		private int index;
 		public Path(Node[] waypoints, Vector3 startPos, float turnDst, float stoppingDst)
 		{
 			this.waypoints = waypoints;
@@ -38,7 +39,10 @@ namespace ProjectSRG.AStarNavigation
 			}
 		}
 
-		public void DrawWithGizmos()
+		public Node Peek()
+			=> index < waypoints.Count() ? waypoints[index++] : null;
+
+        public void DrawWithGizmos()
 		{
 			if(waypoints is null) 
 				return;

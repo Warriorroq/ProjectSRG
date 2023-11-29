@@ -53,7 +53,7 @@ public class Gun : MonoBehaviour
             {
                 TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
 
-                StartCoroutine(SpawnTrail(trail, BulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
+                StartCoroutine(SpawnTrail(trail, BulletSpawnPoint.position + GetDirection() * 2000, Vector3.zero, false));
 
                 LastShootTime = Time.time;
             }
