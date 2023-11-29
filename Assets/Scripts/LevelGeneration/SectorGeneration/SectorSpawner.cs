@@ -16,7 +16,7 @@ namespace ProjectSRG.LevelGeneration.SectorGeneration {
 
         public SectorType GetRandomSectorType()
         {
-            float currentChance = UnityEngine.Random.value;
+            float currentChance = Random.value;
             foreach(var sectorChance in _chanceOfSpawnSectors)
             {
                 if(sectorChance.Key > currentChance)

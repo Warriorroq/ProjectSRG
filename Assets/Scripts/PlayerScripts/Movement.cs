@@ -16,7 +16,7 @@ namespace ProjectSRG.PlayerScripts
         private Trait<float> _speedMultiplier;
 
         private float _thrust1D, _strafe1D, _upDown1D, _roll1D;
-        private Vector2 _mouseYaw, _mouseDistance;
+        private Vector2 _mouseYaw, _inputDistance;
         private Vector2 _screenCenter = new Vector2(Screen.width, Screen.height)/2;
         [SerializeField] private RectTransform _crossHair;
         private void Awake()
@@ -27,7 +27,7 @@ namespace ProjectSRG.PlayerScripts
 
         private void FixedUpdate()
         {
-            transform.Rotate(-_mouseDistance.y * _lookRateSpeed * Time.fixedDeltaTime, _mouseDistance.x * _lookRateSpeed * Time.fixedDeltaTime, _roll1D * _lookRateSpeed * Time.fixedDeltaTime, Space.Self);
+            transform.Rotate(-_inputDistance.y * _lookRateSpeed * Time.fixedDeltaTime, _inputDistance.x * _lookRateSpeed * Time.fixedDeltaTime, _roll1D * _lookRateSpeed * Time.fixedDeltaTime, Space.Self);
             Ray ray = new Ray(transform.position, transform.forward);
             _crossHair.position = Camera.main.WorldToScreenPoint(ray.GetPoint(20f));
 
@@ -54,8 +54,11 @@ namespace ProjectSRG.PlayerScripts
         public void OnMouseYaw(InputAction.CallbackContext context)
         {
             _mouseYaw = context.ReadValue<Vector2>();
-            _mouseDistance = (_mouseYaw - _screenCenter) / _screenCenter;
+            _inputDistance = (_mouseYaw - _screenCenter) / _screenCenter;
         }
+
+        public void OnControllerYaw(InputAction.CallbackContext context)
+            =>_inputDistance = context.ReadValue<Vector2>();
         #endregion
     }
 }

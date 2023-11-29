@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Speed
   m_EditorClassIdentifier: 
   traitName: Speed
-  value: 125
+  value: 20

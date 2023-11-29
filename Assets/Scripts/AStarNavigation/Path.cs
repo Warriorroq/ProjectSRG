@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 namespace ProjectSRG.AStarNavigation
 {
+	[System.Serializable]
 	public class Path
 	{
 
@@ -39,6 +40,9 @@ namespace ProjectSRG.AStarNavigation
 
 		public void DrawWithGizmos()
 		{
+			if(waypoints is null) 
+				return;
+
 			Gizmos.color = Color.black;
 			foreach (Node p in waypoints)
 				Gizmos.DrawCube(p.worldPosition, Vector3.one * 4);

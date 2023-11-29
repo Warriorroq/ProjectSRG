@@ -1,9 +1,12 @@
+using ProjectSRG;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
+    [SerializeField]
+    private float _damage;
     [SerializeField]
     private bool AddBulletSpread = true;
     [SerializeField]
@@ -27,7 +30,6 @@ public class Gun : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        Debug.Log("Shoot");
         if (LastShootTime + ShootDelay < Time.time)
         {
             // Use an object pool instead for these! To keep this tutorial focused, we'll skip implementing one.
@@ -38,6 +40,8 @@ public class Gun : MonoBehaviour
 
             if (Physics.Raycast(BulletSpawnPoint.position, direction, out RaycastHit hit, float.MaxValue, Mask))
             {
+                if (hit.collider.gameObject.TryGetComponent<HealthBehaviour>(out var health))
+                    health.TakeDamage(_damage);
                 TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
 
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
@@ -92,9 +96,9 @@ public class Gun : MonoBehaviour
         }
 
         Trail.transform.position = HitPoint;
-        if (MadeImpact && ImpactParticleSystem)
+        if (MadeImpact)
         {
-            Instantiate(ImpactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
+            Instantiate(ImpactParticleSystem, HitPoint, Quaternion.identity);
         }
 
         Destroy(Trail.gameObject, Trail.time);
