@@ -1,6 +1,6 @@
 Project Features:
 
-Procedural Planet Generation: dynamical and flexible created environments and planets.
+Procedural Planet Generation: dynamic and flexible planet generator.
 
 Dynamic 3D A*: using a fast, adaptive pathfinding algorithm.
 
